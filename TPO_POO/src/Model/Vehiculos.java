@@ -19,6 +19,10 @@ public class Vehiculos {
         this.dueñoVehiculo = dueñoVehiculo;
     }
 
+    public boolean esElAuto(String pat){
+        return this.patente == pat;
+    }
+
     public String getPatente() {
         return patente;
     }

@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.List;
+
 public class Clientes {
     private String nombre;
     private String tipoDocumento;
@@ -14,6 +16,10 @@ public class Clientes {
         this.tipoDocumento = tipoDocumento;
         this.numeroDocumento = numeroDocumento;
         this.numCliente = numCliente;
+    }
+
+    public boolean soyElCliente(int dni){
+        return this.numeroDocumento == dni;
     }
 
     public String getNombre() {
