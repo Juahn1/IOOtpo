@@ -52,8 +52,10 @@ public class Cliente {
     }
 
     public void cargarImporteReparacionCC(int importe){
-        ctaCorriente.setImporteReparacion(importe);
-        ctaCorriente.setLimiteCredito(importe + 1000);
+        if(this.ctaCorriente.getLimiteCredito()>importe){
+            ctaCorriente.setImporteReparacion(importe);
+        }
+
     }
 
     public ClienteView toView(){

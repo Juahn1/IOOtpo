@@ -1,6 +1,7 @@
 package Vista;
 import Controller.TallerController;
 import Views.ClienteView;
+import Views.TecnicoView;
 import Views.VehiculoView;
 
 import javax.swing.*;
@@ -10,9 +11,10 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 public class ReparacionesTaller extends JFrame{
-    private JLabel lblCliente, lblVehiculo, lblMes;
+    private JLabel lblCliente, lblVehiculo, lblMes, lblTecnico;
     private JComboBox<ClienteView> clientesCombo;
     private JComboBox<VehiculoView> vehiculosCombo;
+    private JComboBox<TecnicoView> tecnicosCombo;
     private JButton btnIniciarReparacion, btnCalcularSalario, btnSalir;
     private JTextField txtMes;
 
@@ -42,6 +44,10 @@ public class ReparacionesTaller extends JFrame{
 
         vehiculosCombo = new JComboBox<VehiculoView>();
         vehiculosCombo.setBounds(170, 60, 150, 40);
+
+        tecnicosCombo = new JComboBox<TecnicoView>();
+        tecnicosCombo.setBounds(20, 180, 130, 40);
+
         //botones
         btnIniciarReparacion = new JButton("Iniciar Reparación");
         btnIniciarReparacion.setBounds(350, 10, 120, 50);
@@ -102,6 +108,7 @@ public class ReparacionesTaller extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                TallerController.getInstance().calcularSalarioTecnico();
             }
         });
     }

@@ -144,10 +144,13 @@ public class TallerController {
 
     public void retirarAuto(int dniCliente,String patente,int idReparacion){
         Vehiculo v = buscarVehiculo(dniCliente, patente);
-        Reparacion r = buscarReparacion(idReparacion);// retiro el vehiculo
+        Reparacion r = buscarReparacion(idReparacion);
+        if (r.getDniCliente() == v.getDueñoVehiculo()){
+
+// retiro el vehiculo
+        }
         if (v.getDueñoVehiculo() == dniCliente){
-            r.finalizarReparacion(); // se finaliza la reparacion
-            calcularImportesYlimites(idReparacion,dniCliente); // borro el auto si es el del cliente que lo retira
+
         }
          // se calcula el importe de la reparacion y luego se aagrega a la cta cte
         vehiculos.remove(v);
@@ -165,10 +168,7 @@ public class TallerController {
             if(r.getDniCliente() == dniCliente){
                 importe += r.calcularImporteReparacion();
             }
-
-        }
-        c.cargarImporteReparacionCC(importe); // limite sale de la interfaz
-
+        c.cargarImporteReparacionCC(importe);
     }
 
 

@@ -1,15 +1,15 @@
-package Model;
+package Views;
 
-import Views.ClienteView;
-import Views.TecnicoView;
-
-public class Tecnico { // SACAR TRABAJOS REALIZADOS???
+public class TecnicoView {
     private String nombre;
     private String tipoDocumento;
     private int numeroDocumento;
     private float salarioBase;
 
-    public Tecnico(String nombre, String tipoDocumento, int numeroDocumento, float salarioBase) {
+    public TecnicoView(){
+    }
+
+    public TecnicoView(String nombre, String tipoDocumento, int numeroDocumento, float salarioBase) {
         this.nombre = nombre;
         this.tipoDocumento = tipoDocumento;
         this.numeroDocumento = numeroDocumento;
@@ -52,7 +52,7 @@ public class Tecnico { // SACAR TRABAJOS REALIZADOS???
         this.salarioBase = salarioBase;
     }
 
-    public TecnicoView toView(){
-        return new TecnicoView(this.nombre, this.tipoDocumento, this.numeroDocumento, this.salarioBase);
+    public String toString(){
+        return this.nombre + " : " + this.numeroDocumento;
     }
 }
