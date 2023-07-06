@@ -2,23 +2,39 @@ package Controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.Cliente;
-import Model.Reparacion;
-import Model.Tecnico;
-import Model.Vehiculo;
+import Model.*;
+import Views.ClienteView;
+import Views.ReparacionesView;
+import Views.VehiculoView;
 
 public class TallerController {
+    private static TallerController instancia;
     private List<Reparacion> reparaciones;
     private List<Tecnico> tecnicos;
     private List<Cliente> clientes;
     private List<Vehiculo> vehiculos;
 
-    public TallerController(){
+    private TallerController(){
         clientes = new ArrayList<Cliente>();
         reparaciones = new ArrayList<Reparacion>();
         tecnicos = new ArrayList<Tecnico>();
         vehiculos = new ArrayList<Vehiculo>();
-        //cargarDatos();
+        cargarDatos();
+    }
+
+    public static TallerController getInstance(){
+        if (instancia == null){
+            instancia = new TallerController();
+        }
+        return instancia;
+    }
+
+    public void cargarDatos(){
+        clientes.add(new Cliente("Gabriel", "DNI", 44799040));
+        clientes.add(new Cliente("Omi", "DNI", 95935019));
+
+        vehiculos.add(new Vehiculo("ARG080", "Toyota", "Etios", 2023, 44799040));
+        vehiculos.add(new Vehiculo("ARG081", "Ferrari", "Spider", 2023, 95935019));
     }
 
     private Cliente buscarCliente(int dni){
@@ -87,10 +103,21 @@ public class TallerController {
     }
 
     public void altaDeVehiculo(String patente, String marca, String modelo, int año, int dni){
-        vehiculos.add(new Vehiculo(patente, marca, modelo, año, dni));
+        if(verificarExistenciaCliente(dni)){ // si existe el cliente, podes agregar vehiculos
+            vehiculos.add(new Vehiculo(patente, marca, modelo, año, dni));
+        }
     }
 
-    public void altaDeReparacion(int dni, String patente){
+    public void altaDeReparacion(int dni, String patente, String nombre, String tipoDocumento, String marca, String modelo, int año){
+        /*  verifica que el cliente y el vehículo se encuentren registrados, de no ser así
+            los registra. Cuando ambos se encuentren registrados, se confecciona una nueva
+            reparación y se le coloca como estado “Pendiente”. */
+        if (!verificarExistenciaCliente(dni)){
+            altaDeCliente(nombre, tipoDocumento, dni);
+        }
+        if (!verificarExistenciaVehiculo(dni, patente)){
+            altaDeVehiculo(patente, marca, modelo, año, dni);
+        }
         reparaciones.add(new Reparacion(dni, patente));
     }
 
@@ -114,5 +141,54 @@ public class TallerController {
         salarioTotal += salarioBruto / 10; // salario total = mas 10% del salario en manos de obra
 
         return salarioTotal;
+    }
+
+    public void retirarAuto(int dniCliente){
+        for (Vehiculo v: vehiculos){ // retiro el vehiculo
+            if (v.getDueñoVehiculo() == dniCliente){
+                vehiculos.remove(v); // borro el auto si es el del cliente que lo retira
+            }
+        }
+        calcularImportesYlimites(dniCliente);
+    }
+
+    public void calcularImportesYlimites(int dniCliente){
+        Cliente c = buscarCliente(dniCliente);
+        if (c == null){
+            return;
+        }
+        int limite = 0; // sale de la interfaz
+        int importe = 0;
+
+        for (Reparacion r: reparaciones){
+            if(r.getDniCliente() == dniCliente){
+                importe += r.calcularImporteReparacion();
+            }
+        }
+        c.cargarImporteReparacionCC(importe, limite); // limite sale de la interfaz
+    }
+
+    public List<ClienteView> getClientes(){
+        List<ClienteView> listaC = new ArrayList<ClienteView>();
+        for (Cliente c: clientes){
+            listaC.add(c.toView());
+        }
+        return listaC;
+    }
+
+    public List<VehiculoView> getVehiculos(){
+        List<VehiculoView> listaV = new ArrayList<VehiculoView>();
+        for (Vehiculo v: vehiculos){
+            listaV.add(v.toView());
+        }
+        return listaV;
+    }
+
+    public List<ReparacionesView> getReparaciones(){
+        List<ReparacionesView> listaR = new ArrayList<ReparacionesView>();
+        for (Reparacion v: reparaciones){
+            listaR.add(v.toView());
+        }
+        return listaR;
     }
 }

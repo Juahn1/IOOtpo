@@ -1,4 +1,6 @@
 package Model;
+import Views.ClienteView;
+import Views.ReparacionesView;
 import com.sun.jdi.ArrayReference;
 
 import java.time.*;
@@ -72,6 +74,23 @@ public class Reparacion {
     public void setListaManodeobra(List<ManoDeObra> listaManodeobra) {
         this.listaManodeobra = listaManodeobra;
     }
+
+    public String getPatente() {
+        return patente;
+    }
+
+    public void setPatente(String patente) {
+        this.patente = patente;
+    }
+
+    public int getDniCliente() {
+        return dniCliente;
+    }
+
+    public void setDniCliente(int dniCliente) {
+        this.dniCliente = dniCliente;
+    }
+
     //metodos
 
     public boolean soyLaReparacion(int id){
@@ -98,11 +117,6 @@ public class Reparacion {
         }
     }
 
-    /*public String[] obtenerTecnicos(){
-        String[] tecnicos = new String[this.listaManodeobra.toArray().length];
-
-    }*/
-
     public float iterarManosDeObra(int dniTecnico){
         float salario = 0;
         for (ManoDeObra m: listaManodeobra){
@@ -113,5 +127,15 @@ public class Reparacion {
         return salario;
     }
 
+    public float calcularImporteReparacion(){
+        int importe = 0;
+        for (Repuesto rep: listaRepuestos){
+            importe += rep.getPrecioRepuesto() * rep.getCantidades();
+        }
+        return importe;
+    }
 
+    public ReparacionesView toView(){
+        return new ReparacionesView(this.idReparacion, this.fechaReparacion, this.patente, this.dniCliente);
+    }
 }
