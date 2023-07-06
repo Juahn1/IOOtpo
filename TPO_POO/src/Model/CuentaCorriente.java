@@ -1,18 +1,15 @@
 package Model;
 
 public class CuentaCorriente {
-    private int limiteCredito;
-    private int importeReparacion;
+    private float limiteCredito;
+    private float importeReparacion;
 
-    public CuentaCorriente(int limiteCredito, int importeReparacion) {
-        this.limiteCredito = limiteCredito;
-        this.importeReparacion = importeReparacion;
+    public CuentaCorriente() {
+        this.limiteCredito = 5000;
+        this.importeReparacion = 0;
     }
 
-    public CuentaCorriente(){
-    }
-
-    public int getLimiteCredito() {
+    public float getLimiteCredito() {
         return limiteCredito;
     }
 
@@ -20,7 +17,7 @@ public class CuentaCorriente {
         this.limiteCredito = limiteCredito;
     }
 
-    public int getImporteReparacion() {
+    public float getImporteReparacion() {
         return importeReparacion;
     }
 
