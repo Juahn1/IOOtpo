@@ -1,24 +1,20 @@
 package Vista;
 import Controller.TallerController;
-import Model.Cliente;
-import Model.Vehiculo;
 import Views.ClienteView;
-import Views.ReparacionesView;
 import Views.VehiculoView;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ReparacionesTaller extends JFrame{
-    private JLabel lblCliente, lblVehiculo;
+    private JLabel lblCliente, lblVehiculo, lblMes;
     private JComboBox<ClienteView> clientesCombo;
     private JComboBox<VehiculoView> vehiculosCombo;
-    private JComboBox<ReparacionesView> reparacionesList;
-    private JButton btnIniciarReparacion, btnBorrar, btnSalir;
+    private JButton btnIniciarReparacion, btnCalcularSalario, btnSalir;
+    private JTextField txtMes;
 
     public ReparacionesTaller(){
         construirInterfaz();
@@ -37,6 +33,9 @@ public class ReparacionesTaller extends JFrame{
 
         lblVehiculo = new JLabel("Vehiculos");
         lblVehiculo.setBounds(170, 10, 150, 50);
+
+        lblMes = new JLabel("Ingrese el mes para facturar");
+        lblMes.setBounds(20, 170, 130, 50);
         //combo boxes
         clientesCombo = new JComboBox<ClienteView>();
         clientesCombo.setBounds(20, 60, 130, 40);
@@ -47,23 +46,22 @@ public class ReparacionesTaller extends JFrame{
         btnIniciarReparacion = new JButton("Iniciar Reparación");
         btnIniciarReparacion.setBounds(350, 10, 120, 50);
 
-        btnBorrar = new JButton("Borrar todo");
-        btnBorrar.setBounds(350, 70, 120, 50);
+        btnCalcularSalario = new JButton("Calcular Salario");
+        btnCalcularSalario.setBounds(350, 200, 120, 50);
 
         btnSalir = new JButton("Salir");
-        btnSalir.setBounds(350, 140, 120, 50);
+        btnSalir.setBounds(350, 70, 120, 50);
 
-        //Jlist
-        reparacionesList = new JComboBox<ReparacionesView>();
-        reparacionesList.setBounds(50, 300, 200, 100);
+        //txt
+        txtMes = new JTextField();
+        txtMes.setBounds(20, 220, 130, 50);
 
-        //lleno ComboBox?
-
+        //lleno ComboBox clientes
         List<ClienteView> clientesList = TallerController.getInstance().getClientes();
         for (ClienteView cv: clientesList){
             clientesCombo.addItem(cv);
         }
-
+        //lleno ComboBox vehiculos
         List<VehiculoView> vehiculosList = TallerController.getInstance().getVehiculos();
         for (VehiculoView vv: vehiculosList){
             vehiculosCombo.addItem(vv);
@@ -74,9 +72,8 @@ public class ReparacionesTaller extends JFrame{
         c.add(clientesCombo);
         c.add(vehiculosCombo);
         c.add(btnIniciarReparacion);
-        c.add(btnBorrar);
+        c.add(btnCalcularSalario);
         c.add(btnSalir);
-        c.add(reparacionesList);
     }
 
     private void manejoEventos(){
@@ -94,17 +91,18 @@ public class ReparacionesTaller extends JFrame{
                 ClienteView cSelect = (ClienteView) clientesCombo.getSelectedItem();
                 VehiculoView vSelect = (VehiculoView) vehiculosCombo.getSelectedItem();
 
-                //genero la reparacion
+                //genero una nueva reparacion
                 TallerController.getInstance().altaDeReparacion(
                         cSelect.getNumeroDocumento(), vSelect.getPatente(), cSelect.getNombre(), cSelect.getTipoDocumento(),
                         vSelect.getMarca(), vSelect.getModelo(), vSelect.getAñoVehiculo());
-                //agregarla a JListReparaciones
-                List<ReparacionesView> reparaciones = TallerController.getInstance().getReparaciones();
-                for (ReparacionesView rv: reparaciones) {
-                    reparacionesList.addItem(rv);
-                }
+            }
+        });
+
+        btnCalcularSalario.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
     }
-
 }

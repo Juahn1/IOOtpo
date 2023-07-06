@@ -74,7 +74,6 @@ public class TallerController {
         return null;
     }
 
-
     public void modificarReparacionManoObra(int idReparacion){ //cambiar parametros para agregar los valores  tanto a repuesto como a mano de obra, detallado en el diagrama
         Reparacion r = buscarReparacion(idReparacion);
         //r.altaManoObra(descripcionTrabajo, cantidadHoras, valorPorHora); // txt de view
@@ -160,14 +159,15 @@ public class TallerController {
         if (c == null){
             return;
         }
-        int limite = 0; // sale de la interfaz
         int importe = 0;
 
         Reparacion r = buscarReparacion(idReparacion); // recordar que las iteraciones sobre los arrays las hace el metodo buscarTal
             if(r.getDniCliente() == dniCliente){
                 importe += r.calcularImporteReparacion();
             }
-        c.cargarImporteReparacionCC(importe, limite); // limite sale de la interfaz // modificar esto
+
+        }
+        c.cargarImporteReparacionCC(importe); // limite sale de la interfaz
 
     }
 
