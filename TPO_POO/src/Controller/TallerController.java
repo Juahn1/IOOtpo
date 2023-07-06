@@ -2,23 +2,28 @@ package Controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.Cliente;
-import Model.Reparacion;
-import Model.Tecnico;
-import Model.Vehiculo;
+import Model.*;
 
 public class TallerController {
+    private static TallerController instancia;
     private List<Reparacion> reparaciones;
     private List<Tecnico> tecnicos;
     private List<Cliente> clientes;
     private List<Vehiculo> vehiculos;
 
-    public TallerController(){
+    private TallerController(){
         clientes = new ArrayList<Cliente>();
         reparaciones = new ArrayList<Reparacion>();
         tecnicos = new ArrayList<Tecnico>();
         vehiculos = new ArrayList<Vehiculo>();
         //cargarDatos();
+    }
+
+    public static TallerController getInstance(){
+        if (instancia == null){
+            instancia = new TallerController();
+        }
+        return instancia;
     }
 
     private Cliente buscarCliente(int dni){
@@ -87,10 +92,14 @@ public class TallerController {
     }
 
     public void altaDeVehiculo(String patente, String marca, String modelo, int año, int dni){
+        //verificar que dni este registrado: El dueño de un vehículo, siempre es un cliente registrado.
         vehiculos.add(new Vehiculo(patente, marca, modelo, año, dni));
     }
 
     public void altaDeReparacion(int dni, String patente){
+        /*  verifica que el cliente y el vehículo se encuentren registrados, de no ser así
+            los registra. Cuando ambos se encuentren registrados, se confecciona una nueva
+            reparación y se le coloca como estado “Pendiente”. */
         reparaciones.add(new Reparacion(dni, patente));
     }
 
@@ -114,5 +123,30 @@ public class TallerController {
         salarioTotal += salarioBruto / 10; // salario total = mas 10% del salario en manos de obra
 
         return salarioTotal;
+    }
+
+    public void retirarAuto(int dniCliente){
+        for (Vehiculo v: vehiculos){ // retiro el vehiculo
+            if (v.getDueñoVehiculo() == dniCliente){
+                vehiculos.remove(v); // borro el auto si es el del cliente que lo retira
+            }
+        }
+        calcularImportesYlimites(dniCliente);
+    }
+
+    public void calcularImportesYlimites(int dniCliente){
+        Cliente c = buscarCliente(dniCliente);
+        if (c == null){
+            return;
+        }
+        int limite = 0; // sale de la interfaz
+        int importe = 0;
+
+        for (Reparacion r: reparaciones){
+            if(r.getDniCliente() == dniCliente){
+                importe += r.calcularImporteReparacion();
+            }
+        }
+        c.cargarImporteReparacionCC(importe, limite); // limite sale de la interfaz
     }
 }

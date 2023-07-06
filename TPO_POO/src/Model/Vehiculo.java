@@ -6,7 +6,6 @@ public class Vehiculo {
     private String modelo;
     private int añoVehiculo;
     private int dueñoVehiculo; // dni del cliente
-    //private boolean clienteRegistrado; no creo q vaya aca esto
 
     public Vehiculo(String patente, String marca, String modelo, int añoVehiculo, int dueñoVehiculo) {
         this.patente = patente;

@@ -9,6 +9,9 @@ public class CuentaCorriente {
         this.importeReparacion = importeReparacion;
     }
 
+    public CuentaCorriente(){
+    }
+
     public int getLimiteCredito() {
         return limiteCredito;
     }

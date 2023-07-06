@@ -2,7 +2,7 @@ package Model;
 
 public class ManoDeObra {
     private int codigo;
-    private static int contador = 0;
+    private static int contador = 2000;
     private String descripcionTrabajo;
     private int cantidadHoras;
     private float valorPorHora;

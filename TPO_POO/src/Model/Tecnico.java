@@ -1,11 +1,10 @@
 package Model;
 
-public class Tecnico {
+public class Tecnico { // SACAR TRABAJOS REALIZADOS???
     private String nombre;
     private String tipoDocumento;
     private int numeroDocumento;
     private float salarioBase;
-    private int trabajosExitosos;
 
     public Tecnico(String nombre, String tipoDocumento, int numeroDocumento, float salarioBase) {
         this.nombre = nombre;
@@ -48,13 +47,5 @@ public class Tecnico {
 
     public void setSalarioBase(float salarioBase) {
         this.salarioBase = salarioBase;
-    }
-
-    public int getTrabajosExitosos() {
-        return trabajosExitosos;
-    }
-
-    public void setTrabajosExitosos(int trabajosExitosos) {
-        this.trabajosExitosos = trabajosExitosos;
     }
 }
