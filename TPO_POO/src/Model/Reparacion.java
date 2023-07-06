@@ -1,4 +1,6 @@
 package Model;
+import Views.ClienteView;
+import Views.ReparacionesView;
 import com.sun.jdi.ArrayReference;
 
 import java.time.*;
@@ -131,5 +133,9 @@ public class Reparacion {
             importe += rep.getPrecioRepuesto() * rep.getCantidades();
         }
         return importe;
+    }
+
+    public ReparacionesView toView(){
+        return new ReparacionesView(this.idReparacion, this.fechaReparacion, this.patente, this.dniCliente);
     }
 }

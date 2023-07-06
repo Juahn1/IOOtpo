@@ -3,6 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Model.*;
+import Views.ClienteView;
+import Views.ReparacionesView;
+import Views.VehiculoView;
 
 public class TallerController {
     private static TallerController instancia;
@@ -16,7 +19,7 @@ public class TallerController {
         reparaciones = new ArrayList<Reparacion>();
         tecnicos = new ArrayList<Tecnico>();
         vehiculos = new ArrayList<Vehiculo>();
-        //cargarDatos();
+        cargarDatos();
     }
 
     public static TallerController getInstance(){
@@ -24,6 +27,14 @@ public class TallerController {
             instancia = new TallerController();
         }
         return instancia;
+    }
+
+    public void cargarDatos(){
+        clientes.add(new Cliente("Gabriel", "DNI", 44799040));
+        clientes.add(new Cliente("Omi", "DNI", 95935019));
+
+        vehiculos.add(new Vehiculo("ARG080", "Toyota", "Etios", 2023, 44799040));
+        vehiculos.add(new Vehiculo("ARG081", "Ferrari", "Spider", 2023, 95935019));
     }
 
     private Cliente buscarCliente(int dni){
@@ -92,14 +103,21 @@ public class TallerController {
     }
 
     public void altaDeVehiculo(String patente, String marca, String modelo, int año, int dni){
-        //verificar que dni este registrado: El dueño de un vehículo, siempre es un cliente registrado.
-        vehiculos.add(new Vehiculo(patente, marca, modelo, año, dni));
+        if(verificarExistenciaCliente(dni)){ // si existe el cliente, podes agregar vehiculos
+            vehiculos.add(new Vehiculo(patente, marca, modelo, año, dni));
+        }
     }
 
-    public void altaDeReparacion(int dni, String patente){
+    public void altaDeReparacion(int dni, String patente, String nombre, String tipoDocumento, String marca, String modelo, int año){
         /*  verifica que el cliente y el vehículo se encuentren registrados, de no ser así
             los registra. Cuando ambos se encuentren registrados, se confecciona una nueva
             reparación y se le coloca como estado “Pendiente”. */
+        if (!verificarExistenciaCliente(dni)){
+            altaDeCliente(nombre, tipoDocumento, dni);
+        }
+        if (!verificarExistenciaVehiculo(dni, patente)){
+            altaDeVehiculo(patente, marca, modelo, año, dni);
+        }
         reparaciones.add(new Reparacion(dni, patente));
     }
 
@@ -148,5 +166,29 @@ public class TallerController {
             }
         }
         c.cargarImporteReparacionCC(importe, limite); // limite sale de la interfaz
+    }
+
+    public List<ClienteView> getClientes(){
+        List<ClienteView> listaC = new ArrayList<ClienteView>();
+        for (Cliente c: clientes){
+            listaC.add(c.toView());
+        }
+        return listaC;
+    }
+
+    public List<VehiculoView> getVehiculos(){
+        List<VehiculoView> listaV = new ArrayList<VehiculoView>();
+        for (Vehiculo v: vehiculos){
+            listaV.add(v.toView());
+        }
+        return listaV;
+    }
+
+    public List<ReparacionesView> getReparaciones(){
+        List<ReparacionesView> listaR = new ArrayList<ReparacionesView>();
+        for (Reparacion v: reparaciones){
+            listaR.add(v.toView());
+        }
+        return listaR;
     }
 }

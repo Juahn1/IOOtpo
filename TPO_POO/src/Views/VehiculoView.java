@@ -1,24 +1,19 @@
-package Model;
-
-import Views.VehiculoView;
-
-public class Vehiculo {
+package Views;
+public class VehiculoView {
     private String patente;
     private String marca;
     private String modelo;
     private int añoVehiculo;
     private int dueñoVehiculo; // dni del cliente
 
-    public Vehiculo(String patente, String marca, String modelo, int añoVehiculo, int dueñoVehiculo) {
+    public VehiculoView(){}
+
+    public VehiculoView(String patente, String marca, String modelo, int añoVehiculo, int dueñoVehiculo) {
         this.patente = patente;
         this.marca = marca;
         this.modelo = modelo;
         this.añoVehiculo = añoVehiculo;
         this.dueñoVehiculo = dueñoVehiculo;
-    }
-
-    public boolean esElAuto(String pat){
-        return this.patente == pat;
     }
 
     public String getPatente() {
@@ -61,7 +56,7 @@ public class Vehiculo {
         this.dueñoVehiculo = dueñoVehiculo;
     }
 
-    public VehiculoView toView(){
-        return new VehiculoView(this.patente, this.marca, this.modelo, this.añoVehiculo, this.dueñoVehiculo);
+    public String toString(){
+        return this.marca + ", " + this.modelo + " : " + this.patente;
     }
 }

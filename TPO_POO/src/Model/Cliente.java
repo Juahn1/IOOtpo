@@ -1,5 +1,7 @@
 package Model;
 
+import Views.ClienteView;
+
 public class Cliente {
     private String nombre;
     private String tipoDocumento;
@@ -52,5 +54,9 @@ public class Cliente {
     public void cargarImporteReparacionCC(int importe, int limite){
         ctaCorriente.setImporteReparacion(importe);
         ctaCorriente.setLimiteCredito(limite);
+    }
+
+    public ClienteView toView(){
+        return new ClienteView(this.nombre, this.tipoDocumento, this.numeroDocumento);
     }
 }
