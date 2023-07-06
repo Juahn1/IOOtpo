@@ -1,6 +1,6 @@
 package Model;
 
-public class Vehiculos {
+public class Vehiculo {
     private String patente;
     private String marca;
     private String modelo;
@@ -8,10 +8,7 @@ public class Vehiculos {
     private int dueñoVehiculo; // dni del cliente
     //private boolean clienteRegistrado; no creo q vaya aca esto
 
-    public Vehiculos() {
-    }
-
-    public Vehiculos(String patente, String marca, String modelo, int añoVehiculo, int dueñoVehiculo) {
+    public Vehiculo(String patente, String marca, String modelo, int añoVehiculo, int dueñoVehiculo) {
         this.patente = patente;
         this.marca = marca;
         this.modelo = modelo;

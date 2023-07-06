@@ -1,20 +1,18 @@
 package Model;
 
-public class Repuestos {
+public class Repuesto {
     private int codigoRepuesto;
+    private static int contador = 0;
     private String descripcionRepuesto;
     private float precioRepuesto;
     private int cantidades;
 
-    public Repuestos(int codigoRepuesto, String descripcionRepuesto, float precioRepuesto, int cantidades) {
-        this.codigoRepuesto = codigoRepuesto;
+    public Repuesto(String descripcionRepuesto, float precioRepuesto, int cantidades) {
+        contador++;
+        this.codigoRepuesto = contador;
         this.descripcionRepuesto = descripcionRepuesto;
         this.precioRepuesto = precioRepuesto;
         this.cantidades = cantidades;
-    }
-
-    public Repuestos(){
-
     }
 
     public int getCodigoRepuesto() {

@@ -2,18 +2,19 @@ package Model;
 
 public class ManoDeObra {
     private int codigo;
+    private static int contador = 0;
     private String descripcionTrabajo;
     private int cantidadHoras;
     private float valorPorHora;
+    private int dniTecnico;
 
-    public ManoDeObra(int codigo, String descripcionTrabajo, int cantidadHoras, float valorPorHora) {
-        this.codigo = codigo;
+    public ManoDeObra(String descripcionTrabajo, int cantidadHoras, float valorPorHora, int dniTecnico) {
+        contador++;
+        this.codigo = contador;
         this.descripcionTrabajo = descripcionTrabajo;
         this.cantidadHoras = cantidadHoras;
         this.valorPorHora = valorPorHora;
-    }
-
-    public ManoDeObra(){
+        this.dniTecnico = dniTecnico;
     }
 
     public int getCodigo() {
@@ -46,5 +47,13 @@ public class ManoDeObra {
 
     public void setValorPorHora(float valorPorHora) {
         this.valorPorHora = valorPorHora;
+    }
+
+    public int getDniTecnico() {
+        return dniTecnico;
+    }
+
+    public void setDniTecnico(int dniTecnico) {
+        this.dniTecnico = dniTecnico;
     }
 }
