@@ -74,7 +74,6 @@ public class TallerController {
         return null;
     }
 
-
     public void modificarReparacionManoObra(int idReparacion){ //cambiar parametros para agregar los valores  tanto a repuesto como a mano de obra, detallado en el diagrama
         Reparacion r = buscarReparacion(idReparacion);
         //r.altaManoObra(descripcionTrabajo, cantidadHoras, valorPorHora); // txt de view
@@ -157,7 +156,6 @@ public class TallerController {
         if (c == null){
             return;
         }
-        int limite = 0; // sale de la interfaz
         int importe = 0;
 
         for (Reparacion r: reparaciones){
@@ -165,7 +163,7 @@ public class TallerController {
                 importe += r.calcularImporteReparacion();
             }
         }
-        c.cargarImporteReparacionCC(importe, limite); // limite sale de la interfaz
+        c.cargarImporteReparacionCC(importe); // limite sale de la interfaz
     }
 
     public List<ClienteView> getClientes(){
