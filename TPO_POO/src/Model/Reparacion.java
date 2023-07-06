@@ -1,5 +1,117 @@
 package Model;
+import com.sun.jdi.ArrayReference;
+
+import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Reparacion {
+    //atributos
+
+    private int idReparacion;
+    private LocalDate fechaReparacion;
+    private String patente;
+    private List<Repuesto> listaRepuestos;
+    private int dniCliente;
+    private List<ManoDeObra> listaManodeobra;
+    private static int contador = 1000;
+
+    private EstadoReparacion estado;
+
+    private enum EstadoReparacion {
+        PENDIENTE,
+        EN_PROCESO,
+        FINALIZADO
+    }
+
+
+    //constructor
+    public Reparacion(int dniCliente, String patente) {
+        this.contador++;
+        this.idReparacion = contador;
+        this.fechaReparacion = LocalDate.now();
+        this.estado = EstadoReparacion.PENDIENTE;
+        this.listaRepuestos = new ArrayList<Repuesto>();
+        this.listaManodeobra = new ArrayList<ManoDeObra>();
+        this.patente = patente;
+        this.dniCliente = dniCliente;
+    }
+    //getter y setter
+    public int getIdReparacion() {
+        return idReparacion;
+    }
+
+    public void setIdReparacion(int idReparacion) {
+        this.idReparacion = idReparacion;
+    }
+
+    public LocalDate getFechaReparacion() {
+        return fechaReparacion;
+    }
+
+    public void setFechaReparacion(LocalDate fechaReparacion) {
+        this.fechaReparacion = fechaReparacion;
+    }
+
+    public EstadoReparacion obtenerEstado() {
+        return estado;
+    }
+
+    public List<Repuesto> getListaRepuestos() {
+        return listaRepuestos;
+    }
+
+    public void setListaRepuestos(List<Repuesto> listaRepuestos) {
+        this.listaRepuestos = listaRepuestos;
+    }
+
+    public List<ManoDeObra> getListaManodeobra() {
+        return listaManodeobra;
+    }
+
+    public void setListaManodeobra(List<ManoDeObra> listaManodeobra) {
+        this.listaManodeobra = listaManodeobra;
+    }
+    //metodos
+
+    public boolean soyLaReparacion(int id){
+        return this.idReparacion == id;
+    }
+
+    public void comenzarReparacion(){
+        this.estado = EstadoReparacion.EN_PROCESO;
+    }
+
+    public void finalizarReparacion(){
+        this.estado = EstadoReparacion.FINALIZADO;
+    }
+
+    public void agregarManoDeObra(String descripcionTrabajo, int cantidadHoras, float valorPorHora, int dniTecnico) {
+        if(this.estado == EstadoReparacion.EN_PROCESO){     //solo se puede agregar cuando la reparacion esta inicializada
+            this.listaManodeobra.add(new ManoDeObra(descripcionTrabajo, cantidadHoras, valorPorHora, dniTecnico));
+        }
+    }
+
+    public void agregarRepuesto(String descripcionRepuesto, float precioRepuesto, int cantidades){
+        if(this.estado == EstadoReparacion.EN_PROCESO){     //solo se puede agregar cuando la reparacion esta inicializada
+        this.listaRepuestos.add(new Repuesto(descripcionRepuesto, precioRepuesto, cantidades));
+        }
+    }
+
+    /*public String[] obtenerTecnicos(){
+        String[] tecnicos = new String[this.listaManodeobra.toArray().length];
+
+    }*/
+
+    public float iterarManosDeObra(int dniTecnico){
+        float salario = 0;
+        for (ManoDeObra m: listaManodeobra){
+            if(m.getDniTecnico() == dniTecnico){ // todas las manos de obra del tecnico
+                salario += m.getValorPorHora() * m.getCantidadHoras(); // salario total
+            }
+        }
+        return salario;
+    }
+
 
 }

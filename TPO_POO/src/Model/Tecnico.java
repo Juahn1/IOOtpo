@@ -1,30 +1,21 @@
 package Model;
 
-public class Tecnicos {
-    private int idTecnico;
+public class Tecnico {
     private String nombre;
     private String tipoDocumento;
     private int numeroDocumento;
     private float salarioBase;
     private int trabajosExitosos;
 
-    public Tecnicos(){
-    }
-    public Tecnicos(int idTecnico, String nombre, String tipoDocumento, int numeroDocumento, float salarioBase, int trabajosExitosos) {
-        this.idTecnico = idTecnico;
+    public Tecnico(String nombre, String tipoDocumento, int numeroDocumento, float salarioBase) {
         this.nombre = nombre;
         this.tipoDocumento = tipoDocumento;
         this.numeroDocumento = numeroDocumento;
         this.salarioBase = salarioBase;
-        this.trabajosExitosos = trabajosExitosos;
     }
 
-    public int getIdTecnico() {
-        return idTecnico;
-    }
-
-    public void setIdTecnico(int idTecnico) {
-        this.idTecnico = idTecnico;
+    public boolean soyElTecnico(int dni){
+        return this.numeroDocumento == dni;
     }
 
     public String getNombre() {
