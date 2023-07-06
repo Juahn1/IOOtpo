@@ -143,16 +143,19 @@ public class TallerController {
         return salarioTotal;
     }
 
-    public void retirarAuto(int dniCliente){
-        for (Vehiculo v: vehiculos){ // retiro el vehiculo
-            if (v.getDueñoVehiculo() == dniCliente){
-                vehiculos.remove(v); // borro el auto si es el del cliente que lo retira
-            }
+    public void retirarAuto(int dniCliente,String patente,int idReparacion){
+        Vehiculo v = buscarVehiculo(dniCliente, patente);
+        Reparacion r = buscarReparacion(idReparacion);// retiro el vehiculo
+        if (v.getDueñoVehiculo() == dniCliente){
+            r.finalizarReparacion(); // se finaliza la reparacion
+            calcularImportesYlimites(idReparacion,dniCliente); // borro el auto si es el del cliente que lo retira
         }
-        calcularImportesYlimites(dniCliente);
+         // se calcula el importe de la reparacion y luego se aagrega a la cta cte
+        vehiculos.remove(v);
     }
 
-    public void calcularImportesYlimites(int dniCliente){
+
+    private void calcularImportesYlimites(int dniCliente, int idReparacion){
         Cliente c = buscarCliente(dniCliente);
         if (c == null){
             return;
@@ -160,13 +163,14 @@ public class TallerController {
         int limite = 0; // sale de la interfaz
         int importe = 0;
 
-        for (Reparacion r: reparaciones){
+        Reparacion r = buscarReparacion(idReparacion); // recordar que las iteraciones sobre los arrays las hace el metodo buscarTal
             if(r.getDniCliente() == dniCliente){
                 importe += r.calcularImporteReparacion();
             }
-        }
-        c.cargarImporteReparacionCC(importe, limite); // limite sale de la interfaz
+        c.cargarImporteReparacionCC(importe, limite); // limite sale de la interfaz // modificar esto
+
     }
+
 
     public List<ClienteView> getClientes(){
         List<ClienteView> listaC = new ArrayList<ClienteView>();
