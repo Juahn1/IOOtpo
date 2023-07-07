@@ -19,9 +19,11 @@ public class ReparacionesTaller extends JFrame{
     private JComboBox<TecnicoView> tecnicosCombo;
     private JComboBox<Integer> mesCombo;
     private JComboBox<ReparacionesView> reparacionesCombo;
+
     private JButton btnIniciarReparacion, btnCalcularSalario, btnSalir, btnAgregarManoDeObra,
             btnComenzarReparacion, btnFinalizarReparacion,btnRetirarVehiculo, btnAgregarRepuesto;
     private JTextField txtDescripcion, txtCantHoras, txtValorHora, txtdescripcionRepuesto, txtPrecioRepuesto, txtCantidadRepuesto;
+
 
     public ReparacionesTaller(){
         construirInterfaz();
