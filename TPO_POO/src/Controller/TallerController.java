@@ -118,9 +118,6 @@ public class TallerController {
         if (!verificarExistenciaCliente(dni)){
             altaDeCliente(nombre, tipoDocumento, dni);
         }
-        if (!verificarExistenciaVehiculo(dni, patente)){
-            altaDeVehiculo(patente, marca, modelo, año, dni);
-        }
         reparaciones.add(new Reparacion(dni, patente));
     }
 
