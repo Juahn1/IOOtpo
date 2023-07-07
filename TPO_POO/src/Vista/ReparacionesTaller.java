@@ -12,20 +12,24 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 public class ReparacionesTaller extends JFrame{
-    private JLabel lblCliente, lblVehiculo, lblMes, lblTecnico, lblManoDeObra, lblDescripcion, lblCantHoras, lblValorHora;
+    private JLabel lblCliente, lblVehiculo, lblMes, lblTecnico, lblManoDeObra, lblDescripcion,
+            lblCantHoras, lblValorHora, lblReparaciones, lbldescripcionRepuesto, lblPrecioRepuesto, lblCantidadRepuesto, lblRepuesto;
     private JComboBox<ClienteView> clientesCombo;
     private JComboBox<VehiculoView> vehiculosCombo;
     private JComboBox<TecnicoView> tecnicosCombo;
     private JComboBox<Integer> mesCombo;
     private JComboBox<ReparacionesView> reparacionesCombo;
-    private JButton btnIniciarReparacion, btnCalcularSalario, btnSalir, btnAgregarManoDeObra, btnRetirarVehiculo;
-    private JTextField txtDescripcion, txtCantHoras, txtValorHora;
+
+    private JButton btnIniciarReparacion, btnCalcularSalario, btnSalir, btnAgregarManoDeObra,
+            btnComenzarReparacion, btnFinalizarReparacion,btnRetirarVehiculo, btnAgregarRepuesto;
+    private JTextField txtDescripcion, txtCantHoras, txtValorHora, txtdescripcionRepuesto, txtPrecioRepuesto, txtCantidadRepuesto;
+
 
     public ReparacionesTaller(){
         construirInterfaz();
         manejoEventos();
         this.setVisible(true);
-        this.setSize(600, 600);
+        this.setSize(600, 700);
     }
 
     private void construirInterfaz(){
@@ -72,10 +76,25 @@ public class ReparacionesTaller extends JFrame{
         lblDescripcion.setBounds(20, 290, 130, 20);
 
         lblCantHoras = new JLabel("Cantidad de horas");
-        lblCantHoras.setBounds(20, 350, 130, 20);
+        lblCantHoras.setBounds(20, 330, 130, 20);
 
         lblValorHora = new JLabel("Valor por hora");
-        lblValorHora.setBounds(20, 410, 130, 20);
+        lblValorHora.setBounds(20, 370, 130, 20);
+
+        lblReparaciones = new JLabel("Reparaciones:");
+        lblReparaciones.setBounds(400, 260, 160, 20);
+
+        lblRepuesto = new JLabel("AGREGAR REPUESTOS:");
+        lblRepuesto.setBounds(20, 480, 180, 20);
+
+        lbldescripcionRepuesto = new JLabel("Descripción");
+        lbldescripcionRepuesto.setBounds(20, 510, 130, 20);
+
+        lblPrecioRepuesto = new JLabel("Precio");
+        lblPrecioRepuesto.setBounds(20, 550, 130, 20);
+
+        lblCantidadRepuesto = new JLabel("Cantidad");
+        lblCantidadRepuesto.setBounds(20, 590, 130, 20);
 
         //combo boxes
         clientesCombo = new JComboBox<ClienteView>();
@@ -91,10 +110,10 @@ public class ReparacionesTaller extends JFrame{
         mesCombo.setBounds(170, 185, 150, 40);
 
         reparacionesCombo = new JComboBox<ReparacionesView>();
-        reparacionesCombo.setBounds(310, 370, 130, 40);
+        reparacionesCombo.setBounds(400, 280, 160, 50);
 
         //botones
-        btnIniciarReparacion = new JButton("Iniciar Reparación");
+        btnIniciarReparacion = new JButton("Agregar Reparación");
         btnIniciarReparacion.setBounds(400, 10, 160, 50);
 
         btnCalcularSalario = new JButton("Calcular Salario");
@@ -103,18 +122,40 @@ public class ReparacionesTaller extends JFrame{
         btnSalir = new JButton("Salir");
         btnSalir.setBounds(400, 70, 160, 50);
 
-        btnAgregarManoDeObra = new JButton("Agregar");
-        btnAgregarManoDeObra.setBounds(170, 370, 130, 40);
+        btnAgregarManoDeObra = new JButton("Agregar M");
+        btnAgregarManoDeObra.setBounds(170, 340, 130, 40);
+
+        btnComenzarReparacion = new JButton("C");
+        btnComenzarReparacion.setBounds(400, 350, 80, 50);
+
+        btnFinalizarReparacion = new JButton("F");
+        btnFinalizarReparacion.setBounds(480, 350, 80, 50);
+
+        btnRetirarVehiculo = new JButton("Retirar Vehiculo");
+        btnRetirarVehiculo.setBounds(400, 430, 160, 70);
+
+        btnAgregarRepuesto = new JButton("Agregar R");
+        btnAgregarRepuesto.setBounds(170, 560, 130, 40);
+
 
         //txtfields
         txtDescripcion = new JTextField();
-        txtDescripcion.setBounds(20, 320, 130, 20);
+        txtDescripcion.setBounds(20, 310, 130, 20);
 
         txtCantHoras = new JTextField();
-        txtCantHoras.setBounds(20, 380, 130, 20);
+        txtCantHoras.setBounds(20, 350, 130, 20);
 
         txtValorHora = new JTextField();
-        txtValorHora.setBounds(20, 440, 130, 20);
+        txtValorHora.setBounds(20, 390, 130, 20);
+
+        txtdescripcionRepuesto = new JTextField();
+        txtdescripcionRepuesto.setBounds(20, 530, 130, 20);
+
+        txtPrecioRepuesto = new JTextField();
+        txtPrecioRepuesto.setBounds(20, 570, 130, 20);
+
+        txtCantidadRepuesto = new JTextField();
+        txtCantidadRepuesto.setBounds(20, 610, 130, 20);
     }
 
     private void fillComboBoxes(){
@@ -152,6 +193,7 @@ public class ReparacionesTaller extends JFrame{
         //seteo que se seleccionen en null
         setDefaultNull();
     }
+
     private void addItemsToLayout(Container c){
         c.add(lblCliente);
         c.add(lblVehiculo);
@@ -161,6 +203,11 @@ public class ReparacionesTaller extends JFrame{
         c.add(lblDescripcion);
         c.add(lblCantHoras);
         c.add(lblValorHora);
+        c.add(lblReparaciones);
+        c.add(lblRepuesto);
+        c.add(lbldescripcionRepuesto);
+        c.add(lblCantidadRepuesto);
+        c.add(lblPrecioRepuesto);
         //comboxes
         c.add(clientesCombo);
         c.add(vehiculosCombo);
@@ -172,10 +219,17 @@ public class ReparacionesTaller extends JFrame{
         c.add(btnCalcularSalario);
         c.add(btnSalir);
         c.add(btnAgregarManoDeObra);
+        c.add(btnComenzarReparacion);
+        c.add(btnFinalizarReparacion);
+        c.add(btnRetirarVehiculo);
+        c.add(btnAgregarRepuesto);
         //txtfields
         c.add(txtCantHoras);
         c.add(txtValorHora);
         c.add(txtDescripcion);
+        c.add(txtdescripcionRepuesto);
+        c.add(txtCantidadRepuesto);
+        c.add(txtPrecioRepuesto);
     }
 
     private void manejoEventos(){
@@ -194,11 +248,8 @@ public class ReparacionesTaller extends JFrame{
 
                 //genero una nueva reparacion
                 TallerController.getInstance().altaDeReparacion(
-                        cSelect.getNumeroDocumento(), vSelect.getPatente(), cSelect.getNombre(), cSelect.getTipoDocumento(),
-                        vSelect.getMarca(), vSelect.getModelo(), vSelect.getAñoVehiculo());
-                for (VehiculoView v: TallerController.getInstance().getVehiculos()){
-                    System.out.println(v.getPatente());
-                }
+                        cSelect.getNumeroDocumento(), vSelect.getPatente(), cSelect.getNombre(),
+                        cSelect.getTipoDocumento(), vSelect.getAñoVehiculo());
                 fillComboBoxes();
             }
         });
@@ -216,7 +267,76 @@ public class ReparacionesTaller extends JFrame{
         btnAgregarManoDeObra.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                ReparacionesView rSelect = (ReparacionesView) reparacionesCombo.getSelectedItem();
+                TecnicoView tSelect = (TecnicoView) tecnicosCombo.getSelectedItem();
+                String descripcion = txtDescripcion.getText();
+                String cantHoras = txtCantHoras.getText();
+                String valorHora = txtValorHora.getText();
+                int cantHorasInt = 0;
+                float valorXhoraFloat = 0;
+                try {
+                    cantHorasInt = Integer.parseInt(cantHoras);
+                    valorXhoraFloat = Float.parseFloat(valorHora);
+                } catch (NumberFormatException x){
+                    System.out.println("El texto ingresado no es un número válido");
+                }
+                TallerController.getInstance().modificarReparacionManoObra(rSelect.getIdReparacion(), descripcion, cantHorasInt,
+                        valorXhoraFloat, tSelect.getNumeroDocumento());
 
+                /* ver mano de obra -->
+                for (ManoDeObra t: rSelect.getListaManodeobra()){
+                    System.out.println(t.getDescripcionTrabajo());
+                }*/
+            }
+        });
+        btnComenzarReparacion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ReparacionesView rSelect = (ReparacionesView) reparacionesCombo.getSelectedItem();
+                TallerController.getInstance().comenzarRep(rSelect.getIdReparacion());
+            }
+        });
+        btnFinalizarReparacion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ReparacionesView rSelect = (ReparacionesView) reparacionesCombo.getSelectedItem();
+                TallerController.getInstance().finalizarRep(rSelect.getIdReparacion());
+            }
+        });
+        btnRetirarVehiculo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VehiculoView vSelect = (VehiculoView) vehiculosCombo.getSelectedItem();
+                ReparacionesView rSelect = (ReparacionesView) reparacionesCombo.getSelectedItem();
+                try{
+                    TallerController.getInstance().retirarAuto(vSelect.getDueñoVehiculo(),vSelect.getPatente(),rSelect.getIdReparacion());
+                }catch(NullPointerException x){
+                    System.out.println("Seleccione un vehiculo a retirar");
+                }
+                fillComboBoxes();
+            }
+        });
+        btnAgregarRepuesto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ReparacionesView rSelect = (ReparacionesView) reparacionesCombo.getSelectedItem();
+                String descripcion = txtdescripcionRepuesto.getText();
+                String precioRepuesto = txtPrecioRepuesto.getText();
+                String cantidadRepuesto = txtCantidadRepuesto.getText();
+                float precioRepuestoFloat = 0;
+                int cantidadRepuestoInt = 0;
+                try {
+                    cantidadRepuestoInt = Integer.parseInt(precioRepuesto);
+                    precioRepuestoFloat = Float.parseFloat(cantidadRepuesto);
+                } catch (NumberFormatException x){
+                    System.out.println("El texto ingresado no es un número válido");
+                }
+                TallerController.getInstance().modificarReparacionRepuesto(rSelect.getIdReparacion(), descripcion,
+                        precioRepuestoFloat, cantidadRepuestoInt);
+
+                /*for (Repuesto r: rSelect.getListaRepuestos()){
+                    System.out.println(r.getDescripcionRepuesto());
+                } */
             }
         });
     }

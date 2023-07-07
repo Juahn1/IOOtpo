@@ -1,7 +1,5 @@
 package Model;
-import Views.ClienteView;
 import Views.ReparacionesView;
-import com.sun.jdi.ArrayReference;
 
 import java.time.*;
 import java.util.ArrayList;
@@ -115,7 +113,9 @@ public class Reparacion {
     }
 
     public void agregarManoDeObra(String descripcionTrabajo, int cantidadHoras, float valorPorHora, int dniTecnico) {
+        System.out.println(this.estado);
         if(this.estado == EstadoReparacion.EN_PROCESO){     //solo se puede agregar cuando la reparacion esta inicializada
+            System.out.println("llegue???");
             this.listaManodeobra.add(new ManoDeObra(descripcionTrabajo, cantidadHoras, valorPorHora, dniTecnico));
         }
     }
@@ -145,6 +145,6 @@ public class Reparacion {
     }
 
     public ReparacionesView toView(){
-        return new ReparacionesView(this.idReparacion, this.fechaReparacion, this.patente, this.dniCliente);
+        return new ReparacionesView(this.idReparacion, this.fechaReparacion, this.patente, this.dniCliente, this.listaManodeobra, this.listaRepuestos);
     }
 }

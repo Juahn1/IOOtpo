@@ -78,15 +78,30 @@ public class TallerController {
         return null;
     }
 
-    public void modificarReparacionManoObra(int idReparacion){ //cambiar parametros para agregar los valores  tanto a repuesto como a mano de obra, detallado en el diagrama
+    public void modificarReparacionManoObra(int idReparacion, String descripcionTrabajo, int cantidadHoras, float valorPorHora, int dniTecnico){
+        //cambiar parametros para agregar los valores  tanto a repuesto como a mano de obra, detallado en el diagrama
         Reparacion r = buscarReparacion(idReparacion);
-        //r.altaManoObra(descripcionTrabajo, cantidadHoras, valorPorHora); // txt de view
+        r.agregarManoDeObra(descripcionTrabajo, cantidadHoras, valorPorHora, dniTecnico); // txt de view
     }
-// SIGO ACÁ// SIGO ACÁ// SIGO ACÁ// SIGO ACÁ// SIGO ACÁ// SIGO ACÁ// SIGO ACÁ// SIGO ACÁ
-    public void modificarReparacionRepuesto(int idReparacion){ //cambiar parametros para agregar los valores  tanto a repuesto como a mano de obra, detallado en el diagrama
+
+    public void comenzarRep(int idReparacion){
+             Reparacion r = buscarReparacion(idReparacion);
+             if(r != null){
+                 r.comenzarReparacion();
+             }
+         }
+    public void finalizarRep(int idReparacion){
         Reparacion r = buscarReparacion(idReparacion);
-        //r.altaRepuesto(descripcionTrabajo, cantidadHoras, valorPorHora); // txt de view
+        if(r != null){
+            r.finalizarReparacion();
+        }
     }
+
+    public void modificarReparacionRepuesto(int idReparacion, String descripcionRepuesto, float precioRepuesto, int cantidades){ //cambiar parametros para agregar los valores  tanto a repuesto como a mano de obra, detallado en el diagrama
+        Reparacion r = buscarReparacion(idReparacion);
+        r.agregarRepuesto(descripcionRepuesto, precioRepuesto, cantidades); // txt de view
+    }
+
 
     public boolean verificarExistenciaCliente(int dni){
         if (buscarCliente(dni) != null){ // si no retorna null, el cliente existe
@@ -111,7 +126,7 @@ public class TallerController {
         }
     }
 
-    public void altaDeReparacion(int dni, String patente, String nombre, String tipoDocumento, String marca, String modelo, int año){
+    public void altaDeReparacion(int dni, String patente, String nombre, String tipoDocumento, int año){
         /*  verifica que el cliente y el vehículo se encuentren registrados, de no ser así
             los registra. Cuando ambos se encuentren registrados, se confecciona una nueva
             reparación y se le coloca como estado “Pendiente”. */
@@ -147,11 +162,9 @@ public class TallerController {
         Vehiculo v = buscarVehiculo(dniCliente, patente);
         Reparacion r = buscarReparacion(idReparacion);
         if (r.getDniCliente() == v.getDueñoVehiculo()){
-
-// retiro el vehiculo
-        }
-        if (v.getDueñoVehiculo() == dniCliente){
-
+            r.finalizarReparacion();
+            calcularImportesYlimites(dniCliente,idReparacion);
+            // retiro el vehiculo
         }
          // se calcula el importe de la reparacion y luego se aagrega a la cta cte
         vehiculos.remove(v);
