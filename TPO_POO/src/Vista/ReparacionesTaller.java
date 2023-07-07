@@ -15,53 +15,78 @@ public class ReparacionesTaller extends JFrame{
     private JComboBox<ClienteView> clientesCombo;
     private JComboBox<VehiculoView> vehiculosCombo;
     private JComboBox<TecnicoView> tecnicosCombo;
+    private JComboBox<Integer> mesCombo;
     private JButton btnIniciarReparacion, btnCalcularSalario, btnSalir;
-    private JTextField txtMes;
 
     public ReparacionesTaller(){
         construirInterfaz();
         manejoEventos();
         this.setVisible(true);
-        this.setSize(500, 500);
+        this.setSize(600, 500);
     }
 
     private void construirInterfaz(){
         Container c = this.getContentPane();
         c.setLayout(null);
 
+        //instancio todos los J_items del container
+        declararItems();
+
+        //lleno los comboboxes
+        fillComboBoxes();
+
+        //agrego los items al layout
+        addItemsToLayout(c);
+
+        //seteo que se seleccionen en null
+        setDefaultNull();
+    }
+
+    private void setDefaultNull(){
+        //default = empty
+        clientesCombo.setSelectedItem(null);
+        vehiculosCombo.setSelectedItem(null);
+        tecnicosCombo.setSelectedItem(null);
+        mesCombo.setSelectedItem(null);
+    }
+    private void declararItems(){
         //labels
         lblCliente = new JLabel("Cientes");
-        lblCliente.setBounds(20, 10, 130, 50);
+        lblCliente.setBounds(20, 10, 130, 30);
 
         lblVehiculo = new JLabel("Vehiculos");
-        lblVehiculo.setBounds(170, 10, 150, 50);
+        lblVehiculo.setBounds(170, 10, 150, 30);
 
-        lblMes = new JLabel("Ingrese el mes para facturar");
-        lblMes.setBounds(20, 170, 130, 50);
+        lblTecnico = new JLabel("Tecnicos");
+        lblTecnico.setBounds(20, 170, 130, 30);
+
+        lblMes = new JLabel("Ingrese el mes");
+        lblMes.setBounds(170, 170, 150, 30);
+
         //combo boxes
         clientesCombo = new JComboBox<ClienteView>();
-        clientesCombo.setBounds(20, 60, 130, 40);
+        clientesCombo.setBounds(20, 45, 130, 40);
 
         vehiculosCombo = new JComboBox<VehiculoView>();
-        vehiculosCombo.setBounds(170, 60, 150, 40);
+        vehiculosCombo.setBounds(170, 45, 150, 40);
 
         tecnicosCombo = new JComboBox<TecnicoView>();
-        tecnicosCombo.setBounds(20, 180, 130, 40);
+        tecnicosCombo.setBounds(20, 205, 130, 40);
+
+        mesCombo = new JComboBox<Integer>();
+        mesCombo.setBounds(170, 205, 150, 40);
 
         //botones
         btnIniciarReparacion = new JButton("Iniciar Reparación");
-        btnIniciarReparacion.setBounds(350, 10, 120, 50);
+        btnIniciarReparacion.setBounds(400, 10, 160, 50);
 
         btnCalcularSalario = new JButton("Calcular Salario");
-        btnCalcularSalario.setBounds(350, 200, 120, 50);
+        btnCalcularSalario.setBounds(400, 200, 160, 50);
 
         btnSalir = new JButton("Salir");
-        btnSalir.setBounds(350, 70, 120, 50);
-
-        //txt
-        txtMes = new JTextField();
-        txtMes.setBounds(20, 220, 130, 50);
-
+        btnSalir.setBounds(400, 70, 160, 50);
+    }
+    private void fillComboBoxes(){
         //lleno ComboBox clientes
         List<ClienteView> clientesList = TallerController.getInstance().getClientes();
         for (ClienteView cv: clientesList){
@@ -72,11 +97,27 @@ public class ReparacionesTaller extends JFrame{
         for (VehiculoView vv: vehiculosList){
             vehiculosCombo.addItem(vv);
         }
-
+        //lleno ComboBox tecnicos
+        List<TecnicoView> tecnicosList = TallerController.getInstance().getTecnicos();
+        for (TecnicoView tv: tecnicosList){
+            tecnicosCombo.addItem(tv);
+        }
+        //lleno ComboBox meses
+        for (int i = 1; i < 13; i++){
+            mesCombo.addItem(i);
+        }
+    }
+    private void addItemsToLayout(Container c){
         c.add(lblCliente);
         c.add(lblVehiculo);
+        c.add(lblTecnico);
+        c.add(lblMes);
+        //comboxes
         c.add(clientesCombo);
         c.add(vehiculosCombo);
+        c.add(tecnicosCombo);
+        c.add(mesCombo);
+        //botones
         c.add(btnIniciarReparacion);
         c.add(btnCalcularSalario);
         c.add(btnSalir);
@@ -107,8 +148,12 @@ public class ReparacionesTaller extends JFrame{
         btnCalcularSalario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                TallerController.getInstance().calcularSalarioTecnico();
+                float salario = 0;
+                TecnicoView tSelect = (TecnicoView) tecnicosCombo.getSelectedItem();
+                Integer mesSelect = (Integer) mesCombo.getSelectedItem();
+                salario = TallerController.getInstance().calcularSalarioTecnico(tSelect.getNumeroDocumento(), mesSelect);
+                JOptionPane.showMessageDialog(null, "El salario es: " + salario);
+                // buscar un alert mas lindo
             }
         });
     }

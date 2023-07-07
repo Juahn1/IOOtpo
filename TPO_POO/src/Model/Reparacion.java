@@ -26,7 +26,6 @@ public class Reparacion {
         FINALIZADO
     }
 
-
     //constructor
     public Reparacion(int dniCliente, String patente) {
         this.contador++;
@@ -37,7 +36,17 @@ public class Reparacion {
         this.listaManodeobra = new ArrayList<ManoDeObra>();
         this.patente = patente;
         this.dniCliente = dniCliente;
+        fillObraYRepuestos();
     }
+
+    private void fillObraYRepuestos(){
+        this.listaRepuestos.add(new Repuesto("tornillos mariposa", 850, 12));
+        this.listaRepuestos.add(new Repuesto("Pastilla de freno", 65000, 4));
+
+        this.listaManodeobra.add(new ManoDeObra("Cambio de gomas", 8, 5000, 44741045));
+        this.listaManodeobra.add(new ManoDeObra("Cambio de aceite", 1, 7000, 44741045));
+    }
+
     //getter y setter
     public int getIdReparacion() {
         return idReparacion;

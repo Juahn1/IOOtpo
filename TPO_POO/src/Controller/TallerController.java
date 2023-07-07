@@ -5,6 +5,7 @@ import java.util.List;
 import Model.*;
 import Views.ClienteView;
 import Views.ReparacionesView;
+import Views.TecnicoView;
 import Views.VehiculoView;
 
 public class TallerController {
@@ -35,6 +36,9 @@ public class TallerController {
 
         vehiculos.add(new Vehiculo("ARG080", "Toyota", "Etios", 2023, 44799040));
         vehiculos.add(new Vehiculo("ARG081", "Ferrari", "Spider", 2023, 95935019));
+
+        tecnicos.add(new Tecnico("Maxi", "DNI", 44741045, 150000));
+        tecnicos.add(new Tecnico("Marco", "DNI", 54688985, 100000));
     }
 
     private Cliente buscarCliente(int dni){
@@ -78,7 +82,7 @@ public class TallerController {
         Reparacion r = buscarReparacion(idReparacion);
         //r.altaManoObra(descripcionTrabajo, cantidadHoras, valorPorHora); // txt de view
     }
-
+// SIGO ACÁ// SIGO ACÁ// SIGO ACÁ// SIGO ACÁ// SIGO ACÁ// SIGO ACÁ// SIGO ACÁ// SIGO ACÁ
     public void modificarReparacionRepuesto(int idReparacion){ //cambiar parametros para agregar los valores  tanto a repuesto como a mano de obra, detallado en el diagrama
         Reparacion r = buscarReparacion(idReparacion);
         //r.altaRepuesto(descripcionTrabajo, cantidadHoras, valorPorHora); // txt de view
@@ -156,7 +160,6 @@ public class TallerController {
         vehiculos.remove(v);
     }
 
-
     private void calcularImportesYlimites(int dniCliente, int idReparacion){
         Cliente c = buscarCliente(dniCliente);
         if (c == null){
@@ -194,5 +197,13 @@ public class TallerController {
             listaR.add(v.toView());
         }
         return listaR;
+    }
+
+    public List<TecnicoView> getTecnicos(){ // devuelve una lista de todos los tecnicos
+        List<TecnicoView> listaT = new ArrayList<TecnicoView>();
+        for (Tecnico t: tecnicos){
+            listaT.add(t.toView());
+        }
+        return listaT;
     }
 }
